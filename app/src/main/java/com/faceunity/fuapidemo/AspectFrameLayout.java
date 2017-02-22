@@ -85,7 +85,8 @@ public class AspectFrameLayout extends FrameLayout {
                     initialHeight = (int) (initialWidth / mTargetAspect);
                 } else {
                     // limited by short height; restrict width
-                    initialWidth = (int) (initialHeight * mTargetAspect);
+                    initialWidth = getContext().getResources().getDisplayMetrics().widthPixels;
+                    initialHeight= (int) (initialWidth/mTargetAspect);
                 }
                 Log.d(TAG, "new size=" + initialWidth + "x" + initialHeight + " + padding " +
                         horizPadding + "x" + vertPadding);
@@ -99,5 +100,11 @@ public class AspectFrameLayout extends FrameLayout {
         //Log.d(TAG, "set width=[" + MeasureSpec.toString(widthMeasureSpec) +
         //        "] height=[" + View.MeasureSpec.toString(heightMeasureSpec) + "]");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        Log.d(TAG, "onLayout: " + left + "_" + top + "_" + right + "_" + bottom);
     }
 }
